@@ -75,6 +75,29 @@
             color: #1a1a1a;
         }
 
+        .x-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            height: 36px;
+            min-width: 36px;
+        }
+
+        .x-icon {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        .x-link:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
         .connect-btn {
             padding: 10px 20px;
             background: #8B5CF6;
@@ -748,6 +771,9 @@
                     <a href="#" onclick="openModal('stats'); return false;">Stats</a>
                     <a href="#" onclick="openModal('docs'); return false;">Docs</a>
                     <a href="https://pancakeswap.finance" target="_blank">Liquidity</a>
+                    <a href="https://x.com/bsc402payment" target="_blank" class="x-link">
+                        <img src="X.png" alt="X" class="x-icon">
+                    </a>
                 </nav>
                 <button class="connect-btn" id="connect-btn" onclick="connectWallet()">
                     Connect Wallet
