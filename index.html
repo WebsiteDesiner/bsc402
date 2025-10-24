@@ -896,8 +896,8 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
     <script>
         // 合约地址配置
-        const BSC402_ADDRESS = '0x78d122dcc1ad141702cf473e759a5075bd9f4444';
-        const CZ402_ADDRESS = '0xec007E62987FE5B5CC7D5f3f56eC3A4D2bed1C33';
+        const BSC402_ADDRESS = '0x2360d1676617bd5610443557f4b0b11bc1d74444';
+        const CZ402_ADDRESS = '0x793dD0Fae4123012dDDaD0f6D0032BD33557a785';
         
         // 标准 ERC20 ABI (用于 BSC402)
         const BSC402_ABI = [
@@ -1258,7 +1258,13 @@
                 await loadBalances();
             } catch (error) {
                 console.error('Approval error:', error);
-                showToast('授权失败: ' + error.message, 'error');
+                if (error.message.includes('Transfer is restricted')) {
+                    showToast('❌ BSC402代币授权被限制！\n代币合约可能暂停了转账功能', 'error');
+                } else if (error.message.includes('execution reverted')) {
+                    showToast('❌ 授权被拒绝！\nBSC402代币可能有转账限制', 'error');
+                } else {
+                    showToast('授权失败: ' + error.message, 'error');
+                }
             }
         }
 
@@ -1301,6 +1307,10 @@
                 console.error('Transaction error:', error);
                 if (error.message.includes('insufficient funds')) {
                     showToast('BNB不足，无法支付手续费', 'error');
+                } else if (error.message.includes('Transfer is restricted')) {
+                    showToast('❌ BSC402代币转账被限制！请检查：\n1. 代币是否被暂停\n2. 您的地址是否被限制\n3. 是否满足最小持有要求', 'error');
+                } else if (error.message.includes('execution reverted')) {
+                    showToast('❌ 交易被拒绝！可能原因：\n1. BSC402代币有转账限制\n2. 合约暂停了转账功能\n3. 您的地址被列入黑名单', 'error');
                 } else {
                     showToast('交易失败: ' + error.message, 'error');
                 }
