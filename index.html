@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZ402 - Charity Payment Protocol</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-image {
+            height: 45px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #1a1a1a;
+        }
+
+        .connect-btn {
+            padding: 10px 20px;
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: #7C3AED;
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .hero-art {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .hero-art-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .charity-address {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .charity-address .label {
+            color: #92400E;
+            font-weight: 600;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        /* Donation Card */
+        .donation-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .donation-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Balance Display */
+        .balance-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .balance-item {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .balance-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .balance-value.bsc {
+            color: #8B5CF6;
+        }
+
+        .balance-value.cz {
+            color: #F59E0B;
+        }
+
+        /* Amount Input */
+        .amount-section {
+            margin-bottom: 30px;
+        }
+
+        .amount-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .amount-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 16px;
+            padding-right: 80px;
+            font-size: 24px;
+            font-weight: 600;
+            border: 2px solid #e5e5e5;
+            border-radius: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+
+        .amount-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Quick Amounts */
+        .quick-amounts {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quick-btn {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            border-color: #8B5CF6;
+            color: #8B5CF6;
+        }
+
+        .quick-btn.active {
+            background: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+
+        /* Slider */
+        .slider-container {
+            margin-bottom: 30px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: #e5e5e5;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Exchange Preview */
+        .exchange-preview {
+            padding: 20px;
+            background: #F0FDF4;
+            border: 1px solid #86EFAC;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .exchange-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exchange-label {
+            color: #166534;
+            font-size: 14px;
+        }
+
+        .exchange-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #166534;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-approve {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .btn-approve.ready {
+            background: #8B5CF6;
+            color: white;
+        }
+
+        .btn-donate {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Stats Sidebar */
+        .stats-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+
+        .stats-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stats-card h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* Info Card */
+        .info-card {
+            background: #F3F4F6;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .info-card h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .info-card a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 20px 0;
+            }
+            
+            .hero {
+                padding: 20px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero .subtitle {
+                font-size: 14px;
+            }
+            
+            .hero-art-image {
+                max-height: 150px;
+            }
+            
+            .balance-display {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .logo-image {
+                height: 35px;
+                max-width: 150px;
+            }
+            
+            .nav {
+                display: none;
+            }
+            
+            .donation-card {
+                padding: 20px;
+            }
+            
+            .stats-card {
+                padding: 15px;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #e5e5e5;
+            border-top-color: #8B5CF6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e5e5e5;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .protocol-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8B5CF6, #F59E0B);
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .section-content {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .flow-diagram {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .flow-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .flow-number {
+            width: 32px;
+            height: 32px;
+            background: #8B5CF6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .flow-text {
+            color: #4b5563;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            color: #10b981;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .highlight {
+            color: #8B5CF6;
+            font-weight: 600;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            border-left: 4px solid #10B981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #EF4444;
+        }
+
+        .toast.info {
+            border-left: 4px solid #3B82F6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.jpg" alt="BSC402 × CZ402" class="logo-image" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                </div>
+                <nav class="nav">
+                    <a href="#" onclick="openModal('protocol'); return false;">Protocol</a>
+                    <a href="#" onclick="openModal('stats'); return false;">Stats</a>
+                    <a href="#" onclick="openModal('docs'); return false;">Docs</a>
+                    <a href="https://pancakeswap.finance" target="_blank">Liquidity</a>
+                </nav>
+                <button class="connect-btn" id="connect-btn" onclick="connectWallet()">
+                    Connect Wallet
+                </button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>402 Charity Payment Protocol</h1>
+            <p class="subtitle">100% Fair Launch · No Team Reserve · Community Driven</p>
+            <div class="hero-art">
+                <img src="ART.jpg" alt="402 Charity Protocol Art" class="hero-art-image">
+            </div>
+            <div class="charity-address">
+                <span class="label">CZ Charity:</span>
+                <span>0x28816C4c4792467390C90E5b426F198570E29307</span>
+            </div>
+        </section>
+
+        <div class="main-grid">
+            <div class="donation-card">
+                <h2>Make a Donation</h2>
+                
+                <div class="balance-display">
+                    <div class="balance-item">
+                        <div class="balance-label">BSC402 Balance</div>
+                        <div class="balance-value bsc" id="bsc402-balance">0.00</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">CZ402 Balance</div>
+                        <div class="balance-value cz" id="cz402-balance">0.00</div>
+                    </div>
+                </div>
+
+                <div class="amount-section">
+                    <label class="amount-label">Amount to Donate</label>
+                    <div class="amount-input-wrapper">
+                        <input type="number" class="amount-input" id="amount-input" placeholder="0" min="10">
+                        <span class="amount-suffix">BSC402</span>
+                    </div>
+                    
+                    <div class="quick-amounts">
+                        <button class="quick-btn" onclick="setAmount(10)">10</button>
+                        <button class="quick-btn" onclick="setAmount(100)">100</button>
+                        <button class="quick-btn" onclick="setAmount(500)">500</button>
+                        <button class="quick-btn" onclick="setAmount(1000)">1K</button>
+                        <button class="quick-btn" onclick="setMaxAmount()">MAX</button>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="amount-slider" min="10" max="1000" value="10">
+                    </div>
+                </div>
+
+                <div class="exchange-preview">
+                    <div class="exchange-row">
+                        <span class="exchange-label">You will receive</span>
+                        <span class="exchange-value" id="receive-amount">1 CZ402</span>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-approve" id="approve-btn" onclick="approve()" disabled>
+                        Approve BSC402
+                    </button>
+                    <button class="btn btn-donate" id="donate-btn" onclick="donate()" disabled>
+                        Donate
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-sidebar">
+                <div class="stats-card">
+                    <h3>Protocol Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Raised</span>
+                        <span class="stat-value" id="total-raised">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Donors</span>
+                        <span class="stat-value" id="total-donors">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">CZ402 Minted</span>
+                        <span class="stat-value" id="total-minted">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Your Donations</span>
+                        <span class="stat-value" id="user-donations">0</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>Add Liquidity</h4>
+                    <p>
+                        Provide liquidity on PancakeSwap to earn trading fees. 
+                        Create CZ402/BNB or CZ402/USDT pairs.
+                    </p>
+                    <a href="https://pancakeswap.finance/liquidity" target="_blank">
+                        Go to PancakeSwap →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Title</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+    <script>
+        // 合约地址配置
+        const BSC402_ADDRESS = '';
+        const CZ402_ADDRESS = '';
+        
+        // 标准 ERC20 ABI (用于 BSC402)
+        const BSC402_ABI = [
+            {
+                "inputs": [{"name": "spender", "type": "address"}, {"name": "amount", "type": "uint256"}],
+                "name": "approve",
+                "outputs": [{"name": "", "type": "bool"}],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "account", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "owner", "type": "address"}, {"name": "spender", "type": "address"}],
+                "name": "allowance",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+        
+        // CZ402 合约 ABI (完美匹配 CZ402-Simple.sol)
+        const CZ402_ABI = [
+            {
+                "inputs": [{"name": "amount", "type": "uint256"}],
+                "name": "donate",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "donor", "type": "address"}],
+                "name": "getDonorInfo",
+                "outputs": [
+                    {"name": "donated", "type": "uint256"},
+                    {"name": "times", "type": "uint256"},
+                    {"name": "cz402Balance", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getStats",
+                "outputs": [
+                    {"name": "raised", "type": "uint256"},
+                    {"name": "donors", "type": "uint256"},
+                    {"name": "donations", "type": "uint256"},
+                    {"name": "minted", "type": "uint256"}
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "account", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "totalDonated",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "totalDonors",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "donationCount",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "address", "type": "address"}],
+                "name": "donorAmount",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"name": "address", "type": "address"}],
+                "name": "donorTimes",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        let web3;
+        let userAccount;
+        let bsc402Contract;
+        let cz402Contract;
+        let userBSC402Balance = 0;
+
+        // Initialize
+        window.addEventListener('load', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                web3 = new Web3(window.ethereum);
+                
+                // 检查是否配置了合约地址
+                if (!BSC402_ADDRESS || !CZ402_ADDRESS) {
+                    return;
+                }
+                
+                // 初始化合约
+                bsc402Contract = new web3.eth.Contract(BSC402_ABI, BSC402_ADDRESS);
+                cz402Contract = new web3.eth.Contract(CZ402_ABI, CZ402_ADDRESS);
+                
+                // 加载统计数据
+                loadStats();
+                setInterval(loadStats, 15000); // 每15秒更新
+                
+                // 检查是否已连接
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length > 0) {
+                    await handleConnect(accounts);
+                }
+                
+                // 监听账户变化
+                window.ethereum.on('accountsChanged', async (accounts) => {
+                    if (accounts.length > 0) {
+                        await handleConnect(accounts);
+                    } else {
+                        userAccount = null;
+                        document.getElementById('connect-btn').textContent = 'Connect Wallet';
+                    }
+                });
+                
+                // 监听网络变化
+                window.ethereum.on('chainChanged', () => {
+                    window.location.reload();
+                });
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+            } else {
+                showToast('请安装 MetaMask 钱包', 'error');
+            }
+        });
+
+        function setupEventListeners() {
+            // Input change
+            document.getElementById('amount-input').addEventListener('input', function(e) {
+                const value = parseFloat(e.target.value) || 0;
+                updateSlider(value);
+                updatePreview(value);
+                
+                // 检查余额
+                if (userBSC402Balance > 0 && value > userBSC402Balance) {
+                    showToast('余额不足', 'error');
+                }
+            });
+            
+            // Slider change
+            document.getElementById('amount-slider').addEventListener('input', function(e) {
+                const value = parseFloat(e.target.value);
+                document.getElementById('amount-input').value = value;
+                updatePreview(value);
+            });
+        }
+
+        async function connectWallet() {
+            try {
+                // 获取当前网络
+                const chainId = await web3.eth.getChainId();
+                
+                // 检查是否为BSC主网
+                if (chainId !== 56) {
+                    showToast('请切换到 BSC 主网 (Chain ID: 56)', 'error');
+                    
+                    // 尝试切换到BSC主网
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x38' }], // 56 的十六进制
+                        });
+                    } catch (switchError) {
+                        // 如果没有添加BSC网络，添加它
+                        if (switchError.code === 4902) {
+                            try {
+                                await window.ethereum.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [{
+                                        chainId: '0x38',
+                                        chainName: 'Binance Smart Chain',
+                                        nativeCurrency: {
+                                            name: 'BNB',
+                                            symbol: 'BNB',
+                                            decimals: 18
+                                        },
+                                        rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                                        blockExplorerUrls: ['https://bscscan.com']
+                                    }]
+                                });
+                            } catch (addError) {
+                                showToast('添加 BSC 网络失败', 'error');
+                                return;
+                            }
+                        }
+                    }
+                }
+                
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+                await handleConnect(accounts);
+                showToast('钱包连接成功！', 'success');
+            } catch (error) {
+                showToast('连接失败: ' + error.message, 'error');
+            }
+        }
+
+        async function handleConnect(accounts) {
+            userAccount = accounts[0];
+            document.getElementById('connect-btn').textContent = 
+                userAccount.slice(0, 6) + '...' + userAccount.slice(-4);
+            
+            await loadBalances();
+            await loadUserStats();
+        }
+
+        async function loadBalances() {
+            if (!userAccount || !bsc402Contract || !cz402Contract) return;
+            
+            try {
+                // Get BSC402 balance
+                const bsc402Balance = await bsc402Contract.methods.balanceOf(userAccount).call();
+                userBSC402Balance = parseFloat(web3.utils.fromWei(bsc402Balance, 'ether'));
+                document.getElementById('bsc402-balance').textContent = userBSC402Balance.toFixed(2);
+                
+                // Get CZ402 balance
+                const cz402Balance = await cz402Contract.methods.balanceOf(userAccount).call();
+                document.getElementById('cz402-balance').textContent = 
+                    parseFloat(web3.utils.fromWei(cz402Balance, 'ether')).toFixed(2);
+                
+                // Update slider max based on balance
+                const slider = document.getElementById('amount-slider');
+                if (userBSC402Balance > 0) {
+                    slider.max = Math.floor(userBSC402Balance);
+                }
+                
+                // Check allowance
+                const allowance = await bsc402Contract.methods.allowance(userAccount, CZ402_ADDRESS).call();
+                const allowanceAmount = parseFloat(web3.utils.fromWei(allowance, 'ether'));
+                
+                if (allowanceAmount >= 10) { // 至少授权10个
+                    document.getElementById('approve-btn').textContent = '✓ Approved';
+                    document.getElementById('approve-btn').disabled = true;
+                    document.getElementById('approve-btn').classList.remove('ready');
+                    document.getElementById('donate-btn').disabled = false;
+                } else {
+                    document.getElementById('approve-btn').disabled = false;
+                    document.getElementById('approve-btn').classList.add('ready');
+                    document.getElementById('donate-btn').disabled = true;
+                }
+            } catch (error) {
+                console.error('Error loading balances:', error);
+                showToast('加载余额失败', 'error');
+            }
+        }
+
+        async function loadStats() {
+            if (!cz402Contract) return;
+            
+            try {
+                const stats = await cz402Contract.methods.getStats().call();
+                
+                document.getElementById('total-raised').textContent = 
+                    Math.floor(parseFloat(web3.utils.fromWei(stats.raised, 'ether'))).toLocaleString();
+                document.getElementById('total-donors').textContent = stats.donors;
+                document.getElementById('total-minted').textContent = 
+                    Math.floor(parseFloat(web3.utils.fromWei(stats.minted, 'ether'))).toLocaleString();
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadUserStats() {
+            if (!userAccount || !cz402Contract) return;
+            
+            try {
+                const info = await cz402Contract.methods.getDonorInfo(userAccount).call();
+                const donatedAmount = parseFloat(web3.utils.fromWei(info.donated, 'ether'));
+                document.getElementById('user-donations').textContent = 
+                    Math.floor(donatedAmount).toLocaleString();
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
+        function setAmount(amount) {
+            if (userBSC402Balance > 0 && amount > userBSC402Balance) {
+                showToast('余额不足: ' + userBSC402Balance.toFixed(2) + ' BSC402', 'error');
+                return;
+            }
+            document.getElementById('amount-input').value = amount;
+            updateSlider(amount);
+            updatePreview(amount);
+        }
+
+        function setMaxAmount() {
+            if (!userAccount) {
+                showToast('请先连接钱包', 'error');
+                return;
+            }
+            if (userBSC402Balance < 10) {
+                showToast('余额不足，最少需要 10 BSC402', 'error');
+                return;
+            }
+            const max = Math.floor(userBSC402Balance);
+            setAmount(max);
+        }
+
+        function updateSlider(value) {
+            const slider = document.getElementById('amount-slider');
+            if (value <= parseFloat(slider.max)) {
+                slider.value = value;
+            }
+        }
+
+        function updatePreview(amount) {
+            const cz402Amount = amount / 10; // 10:1 ratio
+            document.getElementById('receive-amount').textContent = 
+                cz402Amount.toFixed(1) + ' CZ402';
+        }
+
+        async function approve() {
+            if (!userAccount) {
+                showToast('请先连接钱包', 'error');
+                return;
+            }
+            
+            try {
+                showToast('正在授权 BSC402...', 'info');
+                
+                // 授权最大值
+                const maxAmount = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+                
+                const tx = await bsc402Contract.methods.approve(CZ402_ADDRESS, maxAmount)
+                    .send({ from: userAccount });
+                
+                showToast('授权成功！', 'success');
+                await loadBalances();
+            } catch (error) {
+                console.error('Approval error:', error);
+                showToast('授权失败: ' + error.message, 'error');
+            }
+        }
+
+        async function donate() {
+            const amount = document.getElementById('amount-input').value;
+            if (!amount || amount < 10) {
+                showToast('最少捐赠 10 BSC402', 'error');
+                return;
+            }
+            
+            if (amount > userBSC402Balance) {
+                showToast('余额不足', 'error');
+                return;
+            }
+            
+            try {
+                showToast('正在处理捐赠...', 'info');
+                
+                const amountWei = web3.utils.toWei(amount.toString(), 'ether');
+                
+                // 估算 Gas
+                const gasEstimate = await cz402Contract.methods.donate(amountWei)
+                    .estimateGas({ from: userAccount });
+                
+                const tx = await cz402Contract.methods.donate(amountWei).send({
+                    from: userAccount,
+                    gas: Math.floor(gasEstimate * 1.2) // 添加20%余量
+                });
+                
+                showToast(`✅ 成功！已捐赠 ${amount} BSC402，获得 ${amount/10} CZ402`, 'success');
+                
+                // Reset and reload
+                document.getElementById('amount-input').value = '';
+                document.getElementById('amount-slider').value = 10;
+                updatePreview(0);
+                await loadBalances();
+                await loadStats();
+                await loadUserStats();
+            } catch (error) {
+                console.error('Transaction error:', error);
+                if (error.message.includes('insufficient funds')) {
+                    showToast('BNB不足，无法支付手续费', 'error');
+                } else {
+                    showToast('交易失败: ' + error.message, 'error');
+                }
+            }
+        }
+
+        function showToast(message, type) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Modal Functions
+        function openModal(type) {
+            const modal = document.getElementById('modal-overlay');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            
+            switch(type) {
+                case 'protocol':
+                    title.textContent = '402 Charity Payment Protocol';
+                    body.innerHTML = getProtocolContent();
+                    break;
+                case 'stats':
+                    title.textContent = 'Protocol Statistics';
+                    body.innerHTML = getStatsContent();
+                    break;
+                case 'docs':
+                    title.textContent = 'Documentation';
+                    body.innerHTML = getDocsContent();
+                    break;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal(event) {
+            if (!event || event.target === event.currentTarget) {
+                document.getElementById('modal-overlay').classList.remove('active');
+            }
+        }
+
+        function getProtocolContent() {
+            return `
+                <div class="protocol-badge">
+                    BSC402 × FOURMEME × CZ Charity Payment
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">创新协议介绍</h3>
+                    <p class="section-content">
+                        402慈善支付协议是一个革命性的区块链慈善解决方案，通过FourMeme项目部署的BSC402代币作为支付媒介，
+                        实现透明、高效的慈善捐赠。所有捐赠的BSC402代币100%转入CZ慈善地址，捐赠者获得CZ402奖励代币作为贡献证明。
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">核心特点</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <div class="feature-title">100% Fair Launch</div>
+                            <div class="feature-desc">无预挖、无团队预留，所有代币通过捐赠产生</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💜</div>
+                            <div class="feature-title">BSC402支付</div>
+                            <div class="feature-desc">使用FourMeme生态代币BSC402作为唯一支付方式</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-title">透明捐赠</div>
+                            <div class="feature-desc">所有BSC402直接转入CZ慈善地址，链上可查</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">✨</div>
+                            <div class="feature-title">CZ402奖励</div>
+                            <div class="feature-desc">10:1比例获得CZ402代币，可交易可提供流动性</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">协议流程</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="flow-number">1</span>
+                            <span class="flow-text">持有BSC402代币（FourMeme项目代币）</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">2</span>
+                            <span class="flow-text">通过402协议捐赠BSC402</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">3</span>
+                            <span class="flow-text">BSC402自动转入CZ慈善地址</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">4</span>
+                            <span class="flow-text">获得CZ402奖励代币（10:1比例）</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">CZ慈善地址</h3>
+                    <div class="code-block">
+                        0x28816C4c4792467390C90E5b426F198570E29307
+                    </div>
+                    <p class="section-content">
+                        所有捐赠的BSC402代币将100%转入此地址，完全透明，链上可验证。
+                    </p>
+                </div>
+            `;
+        }
+
+        function getStatsContent() {
+            return `
+                <div class="section">
+                    <h3 class="section-title">实时统计数据</h3>
+                    <p class="section-content">
+                        协议运行以来的所有数据完全透明，实时更新，链上可查。
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">总捐赠量</div>
+                        <div class="feature-desc">累计捐赠的BSC402数量</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">捐赠者数量</div>
+                        <div class="feature-desc">参与捐赠的独立地址数</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎁</div>
+                        <div class="feature-title">CZ402发行量</div>
+                        <div class="feature-desc">已铸造的CZ402总量</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">捐赠次数</div>
+                        <div class="feature-desc">累计捐赠交易数</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">数据透明性</h3>
+                    <p class="section-content">
+                        所有数据均可通过智能合约直接查询，确保完全的透明度和可验证性。
+                        每笔捐赠都会产生链上记录，永久保存在区块链上。
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">查询方法</h3>
+                    <div class="code-block">
+                        // 获取统计数据
+                        contract.getStats()
+                        
+                        // 查询个人捐赠信息
+                        contract.getDonorInfo(address)
+                    </div>
+                </div>
+            `;
+        }
+
+        function getDocsContent() {
+            return `
+                <div class="section">
+                    <h3 class="section-title">快速开始</h3>
+                    <p class="section-content">
+                        <span class="highlight">BSC402 × FOURMEME × CZ Charity Payment</span> 是基于BSC链的创新慈善协议。
+                        通过FourMeme项目部署的BSC402代币作为支付媒介，实现去中心化的慈善捐赠。
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">如何参与</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="flow-number">1</span>
+                            <span class="flow-text"><strong>获取BSC402</strong> - 从FourMeme项目获取BSC402代币</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">2</span>
+                            <span class="flow-text"><strong>连接钱包</strong> - 使用MetaMask连接BSC网络</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">3</span>
+                            <span class="flow-text"><strong>授权代币</strong> - 首次使用需要授权BSC402</span>
+                        </div>
+                        <div class="flow-step">
+                            <span class="flow-number">4</span>
+                            <span class="flow-text"><strong>执行捐赠</strong> - 输入金额并确认交易</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">技术规格</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">网络</div>
+                            <div class="feature-desc">Binance Smart Chain (BSC)</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">支付代币</div>
+                            <div class="feature-desc">BSC402 (FourMeme402)</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">奖励代币</div>
+                            <div class="feature-desc">CZ402</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">兑换比例</div>
+                            <div class="feature-desc">10 BSC402 = 1 CZ402</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">最小捐赠</div>
+                            <div class="feature-desc">10 BSC402</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-title">最大供应</div>
+                            <div class="feature-desc">1,000,000,000 CZ402</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">智能合约</h3>
+                    <div class="code-block">
+                        // BSC402代币地址（FourMeme402）
+                        BSC402: 0x...
+                        
+                        // CZ402慈善代币地址
+                        CZ402: 0x...
+                        
+                        // CZ慈善接收地址
+                        CZ_ADDRESS: 0x28816C4c4792467390C90E5b426F198570E29307
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">流动性提供</h3>
+                    <p class="section-content">
+                        获得CZ402后，可以在PancakeSwap提供流动性，赚取交易手续费：
+                    </p>
+                    <ul style="margin-left: 20px; color: #6b7280; line-height: 1.8;">
+                        <li>创建CZ402/BNB交易对</li>
+                        <li>创建CZ402/USDT交易对</li>
+                        <li>创建CZ402/BSC402交易对</li>
+                        <li>赚取0.25%交易手续费</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">安全审计</h3>
+                    <p class="section-content">
+                        合约代码开源，经过社区审查。所有功能透明可查，无后门，无Owner特权。
+                        捐赠地址硬编码在合约中，无法修改，确保资金安全。
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">常见问题</h3>
+                    <p class="section-content">
+                        <strong>Q: BSC402是什么？</strong><br>
+                        A: BSC402是FourMeme项目创建的代币，也称为FourMeme402。<br><br>
+                        
+                        <strong>Q: 为什么选择402协议？</strong><br>
+                        A: 402是HTTP状态码"Payment Required"，象征着支付即慈善的理念。<br><br>
+                        
+                        <strong>Q: CZ402有什么用途？</strong><br>
+                        A: CZ402是慈善贡献证明，可交易、可提供流动性、可长期持有。
+                    </p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
